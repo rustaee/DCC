@@ -1,5 +1,7 @@
 <template>
-  <header>header</header>
+  <header>
+    <router-link :to="{ name: 'Search' }">Help me find an activity</router-link>
+  </header>
 </template>
 
 <script lang="ts"></script>
