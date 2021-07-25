@@ -13,7 +13,6 @@ import TheFooter from "@/components/ui/TheFooter.vue";
 
 export default defineComponent({
   components: { TheHeader, TheFooter },
-  // setup() {},
 });
 </script>
 
@@ -29,10 +28,25 @@ input {
   outline: none;
 }
 
+a {
+  text-decoration: none;
+  color: $link-color;
+
+  &:hover {
+    color: $secondary-color;
+  }
+}
+
+ul,
+li {
+  list-style: none;
+}
+
 #app {
   width: 100vw;
   min-height: 100vh;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: $font-sans;
+  font-size: $font-size;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -52,7 +66,6 @@ input {
     "header"
     "main"
     "footer";
-
 }
 
 main {
