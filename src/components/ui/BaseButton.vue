@@ -8,7 +8,7 @@
 button {
   padding: 20px 50px;
   width: 100%;
-  margin: 10px;
+  margin: 10px 0;
   border: none;
   border-radius: 5px;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
