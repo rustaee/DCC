@@ -1,18 +1,34 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <div class="search-button-container">
+      <base-button>Find an activity</base-button>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import BaseButton from "@/components/ui/BaseButton.vue";
 
 export default defineComponent({
   name: "Home",
-  components: {
-    HelloWorld,
-  },
+  components: { BaseButton },
 });
 </script>
+
+<style lang="scss" scoped>
+.home {
+  height: 100%;
+  @extend %flex-column;
+}
+
+.search-button-container {
+  width: 30%;
+
+  button {
+    font-family: $font-righteous;
+    font-size: 2rem;
+    color: tint($primary-color, 15);
+  }
+}
+</style>

@@ -1,30 +1,61 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div class="wrapper">
+    <the-header />
+    <main><router-view /></main>
+    <the-footer />
   </div>
-  <router-view />
 </template>
 
+<script lang="ts">
+import { defineComponent } from "vue";
+import TheHeader from "@/components/ui/TheHeader.vue";
+import TheFooter from "@/components/ui/TheFooter.vue";
+
+export default defineComponent({
+  components: { TheHeader, TheFooter },
+  // setup() {},
+});
+</script>
+
 <style lang="scss">
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+button,
+input {
+  outline: none;
+}
+
 #app {
+  width: 100vw;
+  min-height: 100vh;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  background: $primary-color;
+  color: $font-color;
+  background-image: url("./assets/bg2.jpg");
+  background-size: cover;
+  background-blend-mode: multiply;
 }
 
-#nav {
-  padding: 30px;
+.wrapper {
+  display: grid;
+  width: 100vw;
+  min-height: 100vh;
+  grid-template: 70px 1fr 50px / 1fr;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+}
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+main {
+  grid-area: main;
 }
 </style>
