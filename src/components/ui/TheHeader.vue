@@ -9,6 +9,7 @@
 <style lang="scss" scoped>
 header {
   grid-area: header;
-  background-color: rgba($primary-color, 0.7);
+  background-color: tint($primary-color, 10);
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
 }
 </style>

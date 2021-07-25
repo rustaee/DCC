@@ -1,9 +1,7 @@
 <template>
-  <div class="home">
-    <div class="search-button-container">
-      <base-button @click="getActivity()">Find an activity</base-button>
-    </div>
-    <div v-if="activity" class="activity">
+  <div class="activity">
+    gtrtfh
+    <div v-if="activity">
       <div class="activity__title">{{ activity.activity }}</div>
       <div class="activity__type">{{ activity.type }}</div>
       <div class="activity__participants">
@@ -44,7 +42,6 @@
 
 <script lang="ts">
 import { defineComponent, computed } from "vue";
-import BaseButton from "@/components/ui/BaseButton.vue";
 import { useStore } from "vuex";
 
 interface NumberRange {
@@ -54,7 +51,7 @@ interface NumberRange {
 
 export default defineComponent({
   name: "Home",
-  components: { BaseButton },
+  props: ["activity"],
   setup() {
     const store = useStore();
 
@@ -89,7 +86,6 @@ export default defineComponent({
 
     return {
       getActivity,
-      activity,
       calculateAccessibilityPercentage,
       calculatePricePercentage,
       calculateParticipants,
@@ -99,20 +95,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.home {
-  height: 100%;
-  @extend %flex-column;
-}
-
-.search-button-container {
-  width: 30%;
-
-  button {
-    font-family: $font-righteous;
-    font-size: 2rem;
-  }
-}
-
 .activity__accessibility--rate {
   background: red;
   width: 100%;
