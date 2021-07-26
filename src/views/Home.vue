@@ -25,7 +25,7 @@ import ShowActivity from "@/components/ShowActivity.vue";
 export default defineComponent({
   name: "Home",
   components: { BaseButton, BaseLoading, ShowActivity },
-  setup() {
+  setup(): Record<string, unknown> {
     const activity = ref(null);
     const loading = ref<boolean>(false);
     const error = ref<string | boolean>(false);

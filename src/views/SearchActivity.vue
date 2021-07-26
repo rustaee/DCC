@@ -76,72 +76,81 @@
   </div>
 </template>
 
-<script lang="ts" scoped>
+<script lang="ts">
+import { defineComponent, ref } from "vue";
 import axios from "axios";
 import ShowActivity from "@/components/ShowActivity.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
 import BaseAlert from "@/components/ui/BaseAlert.vue";
 import BaseLoading from "@/components/ui/BaseLoading.vue";
 
-export default {
+export default defineComponent({
   components: { ShowActivity, BaseButton, BaseAlert, BaseLoading },
-  data() {
-    return {
-      activity: null,
-      accessibility: 1,
-      type: [],
-      types: [
-        "education",
-        "recreational",
-        "social",
-        "diy",
-        "charity",
-        "cooking",
-        "relaxation",
-        "music",
-        "busywork",
-      ],
-      participants: 1,
-      price: 0,
-      error: false,
-      loading: false,
-    };
-  },
-  methods: {
-    findActivity() {
-      this.activity = null;
-      this.loading = true;
-      this.error = false;
+  setup() {
+    const activity = ref(null);
+    const accessibility = ref(1);
+    const type = ref([]);
+    const types = ref([
+      "education",
+      "recreational",
+      "social",
+      "diy",
+      "charity",
+      "cooking",
+      "relaxation",
+      "music",
+      "busywork",
+    ]);
+    const participants = ref(1);
+    const price = ref(0);
+    const error = ref(false);
+    const loading = ref(false);
+    const findActivity = () => {
+      activity.value = null;
+      loading.value = true;
+      error.value = false;
       let randomType;
 
-      if (this.type.length > 0) {
-        randomType = this.type[Math.trunc(Math.random() * this.type.length)];
+      if (type.value.length > 0) {
+        randomType = type.value[Math.trunc(Math.random() * type.value.length)];
       } else {
-        randomType = this.types[Math.trunc(Math.random() * this.types.length)];
+        randomType =
+          types.value[Math.trunc(Math.random() * types.value.length)];
       }
 
       axios
         .get(
           `http://www.boredapi.com/api/activity?minaccessibility=${
-            1 - this.accessibility
+            1 - accessibility.value
           }&maxaccessibility=1&participants=${
-            this.participants
-          }&min-price=0&max-price=${this.price}&type=${randomType}`
+            participants.value
+          }&min-price=0&max-price=${price.value}&type=${randomType}`
         )
         .then((response) => {
-          this.loading = false;
-          if (response.data.error) this.error = true;
+          loading.value = false;
+          if (response.data.error) error.value = true;
           else {
-            this.activity = response.data;
-            this.error = false;
+            activity.value = response.data;
+            error.value = false;
           }
         })
         .catch((error) => {
-          this.error = error;
+          error.value = error;
         });
-    },
+    };
+    return {
+      activity,
+      accessibility,
+      type,
+      types,
+      price,
+      participants,
+      error,
+      loading,
+      findActivity,
+    };
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

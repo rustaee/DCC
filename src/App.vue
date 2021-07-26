@@ -86,6 +86,7 @@ main {
   @extend %flex-row;
 }
 
+/**  Router-view transition */
 .slide-enter-active,
 .slide-leave-active {
   transition: all 0.5s ease-out;
@@ -101,7 +102,7 @@ main {
 }
 
 @media (min-width: 2000px) {
-  #app{
+  #app {
     font-size: $font-size + 3px;
   }
 }
