@@ -19,5 +19,6 @@
 .card__content {
   margin-top: 10px;
   padding: 10px;
+  @extend %flex-column;
 }
 </style>

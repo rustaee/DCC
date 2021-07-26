@@ -1,40 +1,85 @@
 <template>
   <div class="search-container">
+    <h2>Change options to get more accurate results.</h2>
     <form class="search-form" @submit.prevent="findActivity()">
-      <div class="controll accessibility">
-        <label>Accessibility</label>
-        <input type="range" v-model="accessibility" />
-      </div>
-      <div class="controll type">
-        <div v-for="(value, index) in types" :key="index">
-          <label>{{ value }}</label>
-          <input type="checkbox" v-model="type" :value="value" />
+      <div class="search-form--left-column">
+        <div class="search-form__field search-form__type">
+          <div
+            class="checkbox-container"
+            v-for="(value, index) in types"
+            :key="index"
+          >
+            <input
+              type="checkbox"
+              v-model="type"
+              :name="index"
+              :id="index"
+              :value="value"
+            />
+            <div class="search-form__checkbox"></div>
+            <label :for="index">{{ value }}</label>
+          </div>
         </div>
       </div>
-      <div class="controll participants">
-        <label>Participants</label>
-        <select name="participants" v-model="participants">
-          <option v-for="n in 10" :value="n" :key="n">{{ n }}</option>
-        </select>
-      </div>
-      <div class="controll price">
-        <label>Price</label>
-        <input type="range" v-model="price" />
-      </div>
-      <div class="controll submit">
-        <button>Search</button>
+      <div class="search-form--right-column">
+        <div class="search-form__field accessibility">
+          <label>Accessibility</label>
+          <input
+            type="range"
+            class="slider"
+            v-model="accessibility"
+            min="0"
+            max="1"
+            step="0.1"
+          />
+        </div>
+
+        <div class="search-form__field price">
+          <label>Price</label>
+          <input
+            class="slider"
+            type="range"
+            v-model="price"
+            min="0"
+            max="1"
+            step="0.1"
+          />
+        </div>
+
+        <div class="search-form__field participants">
+          <label>Participants</label>
+          <select name="participants" v-model="participants">
+            <option v-for="n in 10" :value="n" :key="n">{{ n }}</option>
+          </select>
+        </div>
+
+        <div class="search-form__field submit">
+          <base-button>Search</base-button>
+        </div>
       </div>
     </form>
+    <!-- Search Result -->
+    <show-activity
+      v-if="activity && !error"
+      :activity="activity"
+    ></show-activity>
 
-    <show-activity :activity="activity" />
+    <!-- ERROR! not found a result -->
+    <base-alert v-if="error" class="alert fail">
+      <p>We couldn't find an activity with selected options.</p>
+      <p>please try again</p>
+    </base-alert>
   </div>
 </template>
 
 <script lang="ts" scoped>
 import axios from "axios";
 import ShowActivity from "@/components/ShowActivity.vue";
+import BaseButton from "@/components/ui/BaseButton.vue";
+import BaseAlert from "@/components/ui/BaseAlert.vue";
+
 export default {
-  components: { ShowActivity },
+  components: { ShowActivity, BaseButton, BaseAlert },
   data() {
     return {
       activity: null,
@@ -53,6 +98,7 @@ export default {
       ],
       participants: 1,
       price: 0,
+      error: false,
     };
   },
   methods: {
@@ -67,15 +113,126 @@ export default {
 
       axios
         .get(
-          `http://www.boredapi.com/api/activity?minaccessibility=0&maxaccessibility=${this.accessibility}&participants=${this.participants}&min-price=0&max-price=${this.price}`
+          `http://www.boredapi.com/api/activity?minaccessibility=${
+            1 - this.accessibility
+          }&maxaccessibility=1&participants=${
+            this.participants
+          }&min-price=0&max-price=${this.price}&type=${randomType}`
         )
         .then((response) => {
-          this.activity = response.data;
+          if (response.data.error) this.error = true;
+          else {
+            this.activity = response.data;
+            this.error = false;
+          }
         })
-        .catch((error) => console.log(error));
+        .catch((error) => (this.error = error));
     },
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.search-container {
+  width: 100%;
+  @extend %flex-column;
+  padding: 50px;
+
+  h2 {
+    margin-bottom: 20px;
+  }
+}
+
+.search-form {
+  @extend %flex-row;
+  width: 400px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: rgba(shade($primary-color, 50), 0.5);
+  border-radius: 10px;
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.search-form--left-column {
+  width: 150px;
+}
+
+.search-form__field {
+  position: relative;
+}
+
+.search-form__type {
+  @extend %flex-column;
+  align-items: flex-start;
+
+  input {
+    position: relative;
+    margin-right: 10px;
+    position: relative;
+    left: 50px;
+    visibility: hidden;
+
+    &:checked + div {
+      background: $secondary-color;
+    }
+  }
+}
+
+.checkbox-container {
+  position: relative;
+
+  label {
+    position: absolute;
+    left: 0;
+    padding-left: 20px;
+    cursor: pointer;
+  }
+}
+
+.search-form__checkbox {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  left: 0;
+  top: 3px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid tint($primary-color, 80);
+  -webkit-transition: 0.2s;
+  transition: all 0.2s;
+}
+
+.search-form--right-column {
+  text-align: left;
+}
+
+.alert {
+  width: 400px;
+  margin: 20px 0;
+}
+
+.slider {
+  width: 100%;
+  height: 25px;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+select {
+  width: 30%;
+  margin-left: 10px;
+  opacity: 0.7;
+  outline: none;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+</style>

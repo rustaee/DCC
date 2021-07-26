@@ -2,10 +2,12 @@
   <section class="activity">
     <base-card>
       <div class="activity__title activity__field">{{ activity.activity }}</div>
+
       <div class="activity__type activity__field">
         <div class="activity__type__label">Category : &nbsp;</div>
         <div class="activity__type__value">{{ activity.type }}</div>
       </div>
+
       <div class="activity__participants activity__field">
         <div class="activity__participants__label">Participants : &nbsp;</div>
         <div class="activity__participants__value">
@@ -14,30 +16,38 @@
             v-for="n in calculateParticipants(activity.participants)"
             :key="n"
           >
-            |
+            <font-awesome-icon icon="male" />
           </span>
         </div>
       </div>
+
       <div class="activity__price activity__field">
-        <div class="activity__accessibility--rate">
+        <div class="activity__price__label">Price : &nbsp;</div>
+        <div class="activity__price__value">
           <div
-            class="percent"
-            :style="{
-              width: calculatePricePercentage(activity.price),
-            }"
+            class="activity__rating__circle"
+            v-for="n in 10"
+            :class="
+              n <= calculatePricePercentage(activity.price) ? 'active' : ''
+            "
+            :key="n"
           ></div>
         </div>
-        {{ activity.price }}
       </div>
-      <div class="activity__link activity__field">{{ activity.link }}</div>
+
       <div class="activity__accessibility activity__field">
-        {{ activity.accessibility }}
-        <div class="activity__accessibility--rate">
+        <div class="activity__accessibility__label">Accessibility : &nbsp;</div>
+        <div class="activity__accessibility__value">
           <div
-            class="percent"
-            :style="{
-              width: calculateAccessibilityPercentage(activity.accessibility),
-            }"
+            class="activity__rating__circle"
+            v-for="n in 10"
+            :class="
+              n <= calculateAccessibilityPercentage(activity.accessibility) ||
+              n == 1
+                ? 'active'
+                : ''
+            "
+            :key="n"
           ></div>
         </div>
       </div>
@@ -71,14 +81,14 @@ export default defineComponent({
       );
     };
 
-    const calculateAccessibilityPercentage = (value: number): string => {
-      return (
-        convertRange(value, { min: 1, max: 0 }, { min: 0, max: 100 }) + "%"
+    const calculateAccessibilityPercentage = (value: number): number => {
+      return Math.round(
+        convertRange(value, { min: 1, max: 0 }, { min: 0, max: 10 })
       );
     };
-    const calculatePricePercentage = (value: number): string => {
-      return (
-        convertRange(value, { min: 0, max: 1 }, { min: 0, max: 100 }) + "%"
+    const calculatePricePercentage = (value: number): number => {
+      return Math.round(
+        convertRange(value, { min: 0, max: 1 }, { min: 0, max: 10 })
       );
     };
 
@@ -101,11 +111,20 @@ export default defineComponent({
 
 .activity__field {
   margin: 5px 0;
+  width: 300px;
   @extend %flex-row;
+  justify-content: start;
+
+  & > div:first-child {
+    width: 100px;
+    text-align: start;
+  }
 }
 
 .activity__title {
   font-size: 1.1rem;
+  margin-bottom: 15px;
+  width: 100%;
 }
 
 .activity__type__value {
@@ -114,18 +133,24 @@ export default defineComponent({
   border-radius: 5px;
 }
 
-.activity__accessibility--rate {
-  background: red;
-  width: 100%;
-  height: 10px;
-  position: relative;
+.activity__participants__value svg {
+  margin-right: 2px;
+}
 
-  .percent {
-    height: 100%;
-    background: green;
-    position: absolute;
-    left: 0;
-    top: 0;
+.activity__price__value,
+.activity__accessibility__value {
+  @extend %flex-row;
+}
+
+.activity__rating__circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(15, 15, 15, 0.377);
+  margin-right: 2px;
+
+  &.active {
+    background: rgb(62, 224, 62);
   }
 }
 </style>
