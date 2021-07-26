@@ -65,17 +65,18 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .home {
+  width: 95%;
   height: 100%;
   @extend %flex-column;
   flex-wrap: nowrap;
 }
 
 .search-button-container {
-  width: 30%;
+  width: 75%;
 
   button {
     font-family: $font-righteous;
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 }
 
@@ -86,5 +87,35 @@ export default defineComponent({
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+
+@media (min-width: 600px) {
+  .search-button-container {
+    width: 50%;
+
+    button {
+      font-size: 1.7rem;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .search-button-container {
+    width: 30%;
+
+    button {
+      font-size: 2rem;
+    }
+  }
+}
+
+@media (min-width: 2000px) {
+  .search-button-container {
+    width: 20%;
+
+    button {
+      font-size: 2.5rem;
+    }
+  }
 }
 </style>

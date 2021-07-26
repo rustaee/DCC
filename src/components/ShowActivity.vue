@@ -2,7 +2,7 @@
   <section class="activity">
     <base-card>
       <div class="activity__title activity__field">{{ activity.activity }}</div>
-      {{ activity.key }}
+      
       <div class="activity__type activity__field">
         <div class="activity__type__label">Category : &nbsp;</div>
         <div class="activity__type__value">{{ activity.type }}</div>
@@ -140,7 +140,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .activity {
-  min-width: 30%;
   margin-bottom: 30px;
 }
 
@@ -151,7 +150,7 @@ export default defineComponent({
   justify-content: start;
 
   & > div:first-child {
-    width: 100px;
+    width: 120px;
     text-align: start;
   }
 }

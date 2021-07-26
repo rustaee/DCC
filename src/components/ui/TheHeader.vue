@@ -1,31 +1,33 @@
 <template>
   <header class="header">
-    <div class="header__logo">
-      <router-link class="header__logo--big" :to="{ name: 'Home' }"
-        >DCC</router-link
-      >
-      <span class="header__logo--small">Never get bored</span>
+    <div class="header__container">
+      <!-- logo -->
+      <div class="header__logo">
+        <router-link class="header__logo--big" :to="{ name: 'Home' }"
+          >DCC</router-link
+        >
+        <span class="header__logo--small">Never get bored</span>
+      </div>
+
+      <!-- Menu -->
+      <nav class="navigation">
+        <ul>
+          <li>
+            <router-link :to="{ name: 'Search' }">
+              Help me find an activity
+            </router-link>
+          </li>
+          <li class="favorite">
+            <router-link :to="{ name: 'Favorites' }">
+              <font-awesome-icon icon="heart" class="favorite__heart" />
+              <span class="favorite__counter">{{
+                favoriteActivities.length
+              }}</span>
+            </router-link>
+          </li>
+        </ul>
+      </nav>
     </div>
-    <nav class="navigation">
-      <ul>
-        <li>
-          <router-link :to="{ name: 'Search' }">
-            Help me find an activity
-          </router-link>
-        </li>
-        <li>
-          <span class="seperator"> | </span>
-        </li>
-        <li class="favorite">
-          <router-link :to="{ name: 'Favorites' }">
-            <font-awesome-icon icon="heart" class="favorite__heart" />
-            <span class="favorite__counter">{{
-              favoriteActivities.length
-            }}</span>
-          </router-link>
-        </li>
-      </ul>
-    </nav>
   </header>
 </template>
 
@@ -50,9 +52,18 @@ header {
   grid-area: header;
   background-color: tint($primary-color, 10);
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
-  @extend %flex-row;
-  justify-content: space-between;
-  padding: 20px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.header__container {
+  width: 100%;
+  height: 100%;
+  padding: 20px 10px;
+  @extend %flex-column;
+  align-items: flex-start;
+  position: relative;
 }
 
 .header__logo {
@@ -74,6 +85,14 @@ header {
 
 .navigation {
   margin-right: 10px;
+  position: absolute;
+  bottom: -25px;
+  width: 90%;
+
+  ul {
+    @extend %flex-row;
+    justify-content: space-between;
+  }
 
   li {
     display: inline-block;
@@ -94,5 +113,50 @@ header {
   top: 0px;
   left: 0px;
   font-size: 1.5rem;
+}
+
+@media (min-width: 600px) {
+  .header__container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .navigation {
+    position: relative;
+    width: auto;
+    top: 10px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .header__container {
+    width: 1400px;
+  }
+}
+
+@media (min-width: 2000px) {
+  .header__container {
+    width: 2000px;
+  }
+
+  .header__logo--big{
+    font-size: 3rem;
+  }
+
+  .header__logo--small{
+    font-size: 1.8rem;
+  }
+
+  .navigation li{
+    font-size: $font-size + 6px;
+  }
+
+  .favorite__heart{
+    font-size: 2.3rem;
+  }
+
+  .favorite__counter{
+    left: 12px;
+    top: 3px;
+  }
 }
 </style>

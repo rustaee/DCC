@@ -146,19 +146,19 @@ export default {
 
 <style lang="scss" scoped>
 .search-container {
-  width: 100%;
+  width: 90%;
   @extend %flex-column;
-  padding: 50px;
 
   h2 {
-    margin-bottom: 20px;
+    margin: 20px 0;
+    font-size: 1.2rem;
   }
 }
 
 .search-form {
   @extend %flex-row;
-  width: 400px;
-  padding: 20px;
+  min-width: 320px;
+  padding: 10px;
   margin-bottom: 20px;
   background-color: rgba(shade($primary-color, 50), 0.5);
   border-radius: 10px;
@@ -166,7 +166,7 @@ export default {
 }
 
 .search-form--left-column {
-  width: 150px;
+  width: 100px;
 }
 
 .search-form__field {
@@ -219,7 +219,7 @@ export default {
 }
 
 .alert {
-  width: 400px;
+  min-width: 300px;
   margin: 20px 0;
 }
 
@@ -255,5 +255,15 @@ select {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+
+@media (min-width: 600px) {
+  .search-form--left-column {
+    width: 150px;
+  }
+
+  .alert {
+    max-width: 600px;
+  }
 }
 </style>

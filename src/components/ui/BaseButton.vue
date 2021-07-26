@@ -6,7 +6,7 @@
 
 <style lang="scss" scoped>
 button {
-  padding: 20px 50px;
+  padding: 20px 30px;
   width: 100%;
   margin: 10px 0;
   border: none;

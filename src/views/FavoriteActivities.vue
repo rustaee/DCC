@@ -1,7 +1,14 @@
 <template>
   <section class="favorites">
-    <div class="activity" v-for="activity in activities" :key="activity.key">
-      <show-activity :activity="activity"></show-activity>
+    <h2 v-if="activities.length == 0">You have no favorite activitiy yet.</h2>
+    <div
+      class="favorite__activity"
+      v-for="activity in activities"
+      :key="activity.key"
+    >
+      <transition name="fade">
+        <show-activity :activity="activity"></show-activity>
+      </transition>
     </div>
   </section>
 </template>
@@ -27,11 +34,58 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .favorites {
+    width: 90%;
   @extend %flex-row;
   justify-content: space-around;
   padding: 20px 0;
 }
-.activity {
+
+.favorite__activity {
   width: 90%;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+@media (min-width: 600px) {
+  .favorites {
+    justify-content: space-around;
+  }
+
+  .favorite__activity {
+    width: 45%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .favorite__activity {
+    width: 30%;
+  }
+}
+
+@media (min-width: 1400px) {
+  .favorites {
+    width: 1400px;
+  }
+
+  .favorite__activity {
+    width: 23%;
+  }
+}
+
+@media (min-width: 2000px) {
+  .favorites {
+    width: 2000px;
+  }
+
+  .favorite__activity {
+    width: 18%;
+  }
 }
 </style>

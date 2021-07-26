@@ -67,13 +67,14 @@ li {
   background-size: cover;
   background-blend-mode: multiply;
   background-attachment: fixed;
+  background-position: center;
 }
 
 .wrapper {
   display: grid;
   width: 100vw;
   min-height: 100vh;
-  grid-template: 70px 1fr 50px / 1fr;
+  grid-template: auto 1fr 50px / 1fr;
   grid-template-areas:
     "header"
     "main"
@@ -82,6 +83,7 @@ li {
 
 main {
   grid-area: main;
+  @extend %flex-row;
 }
 
 .slide-enter-active,
@@ -96,5 +98,11 @@ main {
 .slide-leave-to {
   opacity: 0;
   transform: translatex(1000px);
+}
+
+@media (min-width: 2000px) {
+  #app{
+    font-size: $font-size + 3px;
+  }
 }
 </style>
