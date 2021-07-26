@@ -18,6 +18,7 @@
 <script lang="ts">
 import { defineComponent, computed, ref } from "vue";
 import axios from "axios";
+import Activity from "@/types/activity";
 import BaseButton from "@/components/ui/BaseButton.vue";
 import BaseLoading from "@/components/ui/BaseLoading.vue";
 import ShowActivity from "@/components/ShowActivity.vue";
@@ -26,7 +27,7 @@ export default defineComponent({
   name: "Home",
   components: { BaseButton, BaseLoading, ShowActivity },
   setup(): Record<string, unknown> {
-    const activity = ref(null);
+    const activity = ref<Activity | null>(null);
     const loading = ref<boolean>(false);
     const error = ref<string | boolean>(false);
 

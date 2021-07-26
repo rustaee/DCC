@@ -2,7 +2,7 @@
   <section class="activity">
     <base-card>
       <div class="activity__title activity__field">{{ activity.activity }}</div>
-      
+
       <div class="activity__type activity__field">
         <div class="activity__type__label">Category : &nbsp;</div>
         <div class="activity__type__value">{{ activity.type }}</div>
@@ -65,9 +65,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, toRefs, onMounted } from "vue";
+import { defineComponent, PropType, ref, toRefs, onMounted } from "vue";
 import { useStore } from "vuex";
 import BaseCard from "@/components/ui/BaseCard.vue";
+import Activity from "@/types/activity";
 
 interface NumberRange {
   min: number;
@@ -76,13 +77,18 @@ interface NumberRange {
 
 export default defineComponent({
   name: "Home",
-  props: ["activity"],
+  props: {
+    activity: {
+      required: true,
+      type: Object as PropType<Activity>,
+    },
+  },
   components: { BaseCard },
 
   setup(props) {
     const { activity } = toRefs(props);
     const store = useStore();
-    const liked = ref(false);
+    const liked = ref<boolean>(false);
     const convertRange = (
       value: number,
       oldRange: NumberRange,
@@ -106,10 +112,10 @@ export default defineComponent({
       );
     };
 
-    const calculateParticipants = (participants: number) =>
+    const calculateParticipants = (participants: number): number =>
       participants > 10 ? 10 : participants;
 
-    const addToFavorite = () => {
+    const addToFavorite = (): void => {
       if (!liked.value) {
         store.dispatch("addToFavorite", activity.value);
       } else {
@@ -118,8 +124,8 @@ export default defineComponent({
       liked.value = !liked.value;
     };
 
-    onMounted(() => {
-      const activityKey = activity.value;
+    onMounted((): void => {
+      const activityKey: Activity = activity.value;
       const activities = store.state.activities;
       const foundActivity = activities.find(
         (element: Record<string, unknown>) => element.key == activityKey.key

@@ -17,13 +17,14 @@
 import { computed, defineComponent } from "vue";
 import { useStore } from "vuex";
 import ShowActivity from "@/components/ShowActivity.vue";
+import Activity from "@/types/activity";
 
 export default defineComponent({
   components: { ShowActivity },
 
   setup() {
     const store = useStore();
-    const activities = computed(() => store.state.activities);
+    const activities = computed((): Activity[] => store.state.activities);
 
     return {
       activities,
@@ -34,7 +35,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .favorites {
-    width: 90%;
+  width: 90%;
   @extend %flex-row;
   justify-content: space-around;
   padding: 20px 0;

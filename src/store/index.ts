@@ -1,9 +1,10 @@
+import Activity from '@/types/activity';
 import axios from 'axios';
 import { createStore } from "vuex";
 
 export default createStore({
   state: {
-    activities: [],
+    activities: [] as Activity[],
   },
   mutations: {
     setFavoriteActivities(state, data){
@@ -28,15 +29,15 @@ export default createStore({
     },
 
     addToFavorite({state}, activity){
-      const newActivityArray:Array<string> = state.activities;
+      const newActivityArray:Activity[] = state.activities;
       newActivityArray.push(activity);
       localStorage.setItem('favorites', JSON.stringify(newActivityArray))
     },
 
-    removeFromFavorite({commit, state}, activity){
+    removeFromFavorite({commit, state}, activity:Activity){
       
       const foundActivity = state.activities.findIndex(
-        (element: Record<string, unknown>) => element.key == activity.key
+        (element: Activity) => element.key == activity.key
       );
       if (foundActivity || foundActivity == 0){
         const newArray = state.activities;

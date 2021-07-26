@@ -32,13 +32,16 @@
 </template>
 
 <script lang="ts">
+import Activity from "@/types/activity";
 import { defineComponent, computed } from "vue";
 import { useStore } from "vuex";
 
 export default defineComponent({
   setup() {
     const store = useStore();
-    const favoriteActivities = computed(() => store.state.activities);
+    const favoriteActivities = computed(
+      (): Activity[] => store.state.activities
+    );
 
     return {
       favoriteActivities,
@@ -138,23 +141,23 @@ header {
     width: 2000px;
   }
 
-  .header__logo--big{
+  .header__logo--big {
     font-size: 3rem;
   }
 
-  .header__logo--small{
+  .header__logo--small {
     font-size: 1.8rem;
   }
 
-  .navigation li{
+  .navigation li {
     font-size: $font-size + 6px;
   }
 
-  .favorite__heart{
+  .favorite__heart {
     font-size: 2.3rem;
   }
 
-  .favorite__counter{
+  .favorite__counter {
     left: 12px;
     top: 3px;
   }

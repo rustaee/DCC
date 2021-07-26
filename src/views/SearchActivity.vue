@@ -83,11 +83,12 @@ import ShowActivity from "@/components/ShowActivity.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
 import BaseAlert from "@/components/ui/BaseAlert.vue";
 import BaseLoading from "@/components/ui/BaseLoading.vue";
+import Activity from "@/types/activity";
 
 export default defineComponent({
   components: { ShowActivity, BaseButton, BaseAlert, BaseLoading },
   setup() {
-    const activity = ref(null);
+    const activity = ref<Activity | null>(null);
     const accessibility = ref(1);
     const type = ref([]);
     const types = ref([
