@@ -1,13 +1,16 @@
 <template>
   <section class="activity">
     <base-card>
+      <!-- Title -->
       <div class="activity__title activity__field">{{ activity.activity }}</div>
 
+      <!-- Type -->
       <div class="activity__type activity__field">
         <div class="activity__type__label">Category : &nbsp;</div>
         <div class="activity__type__value">{{ activity.type }}</div>
       </div>
 
+      <!-- Participants -->
       <div class="activity__participants activity__field">
         <div class="activity__participants__label">Participants : &nbsp;</div>
         <div class="activity__participants__value">
@@ -21,6 +24,7 @@
         </div>
       </div>
 
+      <!-- Price -->
       <div class="activity__price activity__field">
         <div class="activity__price__label">Price : &nbsp;</div>
         <div class="activity__price__value">
@@ -35,6 +39,7 @@
         </div>
       </div>
 
+      <!-- Accessibility -->
       <div class="activity__accessibility activity__field">
         <div class="activity__accessibility__label">Accessibility : &nbsp;</div>
         <div class="activity__accessibility__value">
@@ -68,8 +73,9 @@
 import { defineComponent, PropType, ref, toRefs, onMounted } from "vue";
 import { useStore } from "vuex";
 import BaseCard from "@/components/ui/BaseCard.vue";
-import Activity from "@/types/activity";
+import Activity from "@/types/activity"; /** Typescript interface */
 
+/** To use in convert range function */
 interface NumberRange {
   min: number;
   max: number;
@@ -89,6 +95,9 @@ export default defineComponent({
     const { activity } = toRefs(props);
     const store = useStore();
     const liked = ref<boolean>(false);
+
+    /** Get a number in a range -for example 10 in 0-20  */
+    /** The output is the number in new range (0-100) which is 50 */
     const convertRange = (
       value: number,
       oldRange: NumberRange,
@@ -100,7 +109,8 @@ export default defineComponent({
         newRange.min
       );
     };
-
+    
+    /** To be shown in the range slider */
     const calculateAccessibilityPercentage = (value: number): number => {
       return Math.round(
         convertRange(value, { min: 1, max: 0 }, { min: 0, max: 10 })
@@ -112,6 +122,8 @@ export default defineComponent({
       );
     };
 
+    /** Just show 10 icon for participants. */
+    /** More than 10 participant are shown whit >10 */
     const calculateParticipants = (participants: number): number =>
       participants > 10 ? 10 : participants;
 
@@ -124,6 +136,7 @@ export default defineComponent({
       liked.value = !liked.value;
     };
 
+    /** To see if this activity is on the favorite list or not */
     onMounted((): void => {
       const activityKey: Activity = activity.value;
       const activities = store.state.activities;
@@ -183,17 +196,6 @@ export default defineComponent({
   @extend %flex-row;
 }
 
-.activity__rating__circle {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(15, 15, 15, 0.377);
-  margin-right: 2px;
-
-  &.active {
-    background: rgb(62, 224, 62);
-  }
-}
 
 .add-to-favorite {
   position: absolute;

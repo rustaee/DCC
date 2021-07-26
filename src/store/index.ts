@@ -4,7 +4,7 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
-    activities: [] as Activity[],
+    activities: [] as Activity[], /** Favorite activities saved in localStorage */
   },
   mutations: {
     setFavoriteActivities(state, data){

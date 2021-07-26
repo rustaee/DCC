@@ -24,7 +24,10 @@ export default defineComponent({
 
   setup() {
     const store = useStore();
-    const activities = computed((): Activity[] => store.state.activities);
+    const activities = computed(
+      /** Favorite activities saved in localStorage */
+      (): Activity[] => store.state.activities
+    );
 
     return {
       activities,

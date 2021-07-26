@@ -3,6 +3,7 @@
     <font-awesome-icon icon="spinner" />
   </div>
 </template>
+
 <style lang="scss">
 #loading {
   width: 100%;

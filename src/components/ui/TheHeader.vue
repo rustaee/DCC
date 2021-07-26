@@ -1,6 +1,7 @@
 <template>
   <header class="header">
     <div class="header__container">
+
       <!-- logo -->
       <div class="header__logo">
         <router-link class="header__logo--big" :to="{ name: 'Home' }"
@@ -27,12 +28,13 @@
           </li>
         </ul>
       </nav>
+
     </div>
   </header>
 </template>
 
 <script lang="ts">
-import Activity from "@/types/activity";
+import Activity from "@/types/activity"; /** Typescript interface */
 import { defineComponent, computed } from "vue";
 import { useStore } from "vuex";
 

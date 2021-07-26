@@ -2,6 +2,7 @@
   <div class="search-container">
     <h2>Change options to get more accurate results.</h2>
     <form class="search-form" @submit.prevent="findActivity()">
+      <!-- left column - Category checkboxes -->
       <div class="search-form--left-column">
         <div class="search-form__field search-form__type">
           <div
@@ -21,6 +22,8 @@
           </div>
         </div>
       </div>
+
+      <!-- Right column -accessibility, price, participants- -->
       <div class="search-form--right-column">
         <div class="search-form__field accessibility">
           <label>Accessibility</label>
@@ -58,8 +61,10 @@
         </div>
       </div>
     </form>
+
     <!-- Loading -->
     <BaseLoading v-if="loading" />
+
     <!-- Search Result -->
     <transition name="fade">
       <show-activity
@@ -83,7 +88,7 @@ import ShowActivity from "@/components/ShowActivity.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
 import BaseAlert from "@/components/ui/BaseAlert.vue";
 import BaseLoading from "@/components/ui/BaseLoading.vue";
-import Activity from "@/types/activity";
+import Activity from "@/types/activity"; /** Typescript interface */
 
 export default defineComponent({
   components: { ShowActivity, BaseButton, BaseAlert, BaseLoading },
@@ -106,6 +111,7 @@ export default defineComponent({
     const price = ref(0);
     const error = ref(false);
     const loading = ref(false);
+    
     const findActivity = () => {
       activity.value = null;
       loading.value = true;

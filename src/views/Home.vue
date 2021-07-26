@@ -18,7 +18,7 @@
 <script lang="ts">
 import { defineComponent, computed, ref } from "vue";
 import axios from "axios";
-import Activity from "@/types/activity";
+import Activity from "@/types/activity"; /** Typescript interface */
 import BaseButton from "@/components/ui/BaseButton.vue";
 import BaseLoading from "@/components/ui/BaseLoading.vue";
 import ShowActivity from "@/components/ShowActivity.vue";
@@ -26,16 +26,16 @@ import ShowActivity from "@/components/ShowActivity.vue";
 export default defineComponent({
   name: "Home",
   components: { BaseButton, BaseLoading, ShowActivity },
-  setup(): Record<string, unknown> {
+  setup() {
     const activity = ref<Activity | null>(null);
     const loading = ref<boolean>(false);
     const error = ref<string | boolean>(false);
 
-    const getActivity = () => {
+    const getActivity = async () => {
       activity.value = null;
       loading.value = true;
       error.value = false;
-      axios
+      await axios
         .get("https://www.boredapi.com/api/activity/")
         .then((response) => {
           loading.value = false;
