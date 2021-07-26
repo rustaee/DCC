@@ -3,21 +3,31 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
-    activity: null,
+    activities: [],
   },
   mutations: {
-    setActivity(state, data){
-      if(data) state.activity = data;
+    setFavoriteActivities(state, data){
+      if(data) state.activities = data;
     }
   },
   actions: {
-    async getRandomActivity(context){
-      await axios
-      .get('http://www.boredapi.com/api/activity/')
-      .then(response => {
-        context.commit('setActivity', response.data);
-      })
-      .catch(error => console.log(error))
+    getFavoriteActivities(context){
+      if (localStorage.getItem("favorites")) {
+        try {
+          const data = localStorage.getItem("favorites");
+          if (data) {
+            context.commit('setFavoriteActivities',JSON.parse(data));
+          }
+        } catch (e) {
+          localStorage.removeItem("favorites");
+        }
+      }
+    },
+
+    addToFavorite({state}, activity){
+      const newActivityArray:Array<string> = state.activities;
+      newActivityArray.push(activity);
+      localStorage.setItem('favorites', JSON.stringify(newActivityArray))
     }
   },
   modules: {},

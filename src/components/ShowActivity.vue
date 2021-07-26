@@ -51,12 +51,22 @@
           ></div>
         </div>
       </div>
+
+      <!-- Add to my favorite -->
+      <span
+        class="add-to-favorite"
+        :class="{ liked: liked }"
+        @click="addToFavorite()"
+      >
+        <font-awesome-icon icon="heart" />
+      </span>
     </base-card>
   </section>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref, toRefs } from "vue";
+import { useStore } from "vuex";
 import BaseCard from "@/components/ui/BaseCard.vue";
 
 interface NumberRange {
@@ -68,7 +78,11 @@ export default defineComponent({
   name: "Home",
   props: ["activity"],
   components: { BaseCard },
-  setup() {
+
+  setup(props) {
+    const { activity } = toRefs(props);
+    const store = useStore();
+    const liked = ref(false);
     const convertRange = (
       value: number,
       oldRange: NumberRange,
@@ -95,10 +109,21 @@ export default defineComponent({
     const calculateParticipants = (participants: number) =>
       participants > 10 ? 10 : participants;
 
+    const addToFavorite = () => {
+      if (!liked.value) {
+        store.dispatch("addToFavorite", activity.value);
+      } else {
+        console.log("hech");
+      }
+      liked.value = !liked.value;
+    };
+
     return {
       calculateAccessibilityPercentage,
       calculatePricePercentage,
       calculateParticipants,
+      addToFavorite,
+      liked,
     };
   },
 });
@@ -107,6 +132,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .activity {
   min-width: 30%;
+  margin-bottom: 30px;
 }
 
 .activity__field {
@@ -125,6 +151,7 @@ export default defineComponent({
   font-size: 1.1rem;
   margin-bottom: 15px;
   width: 100%;
+  padding-right: 30px;
 }
 
 .activity__type__value {
@@ -151,6 +178,19 @@ export default defineComponent({
 
   &.active {
     background: rgb(62, 224, 62);
+  }
+}
+
+.add-to-favorite {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+  -webkit-transition: 0.3s;
+  transition: all 0.3s;
+
+  &.liked {
+    color: red;
   }
 }
 </style>

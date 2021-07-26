@@ -58,11 +58,15 @@
         </div>
       </div>
     </form>
+    <!-- Loading -->
+    <BaseLoading v-if="loading" />
     <!-- Search Result -->
-    <show-activity
-      v-if="activity && !error"
-      :activity="activity"
-    ></show-activity>
+    <transition name="fade">
+      <show-activity
+        v-if="activity && !error"
+        :activity="activity"
+      ></show-activity>
+    </transition>
 
     <!-- ERROR! not found a result -->
     <base-alert v-if="error" class="alert fail">
@@ -77,9 +81,10 @@ import axios from "axios";
 import ShowActivity from "@/components/ShowActivity.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
 import BaseAlert from "@/components/ui/BaseAlert.vue";
+import BaseLoading from "@/components/ui/BaseLoading.vue";
 
 export default {
-  components: { ShowActivity, BaseButton, BaseAlert },
+  components: { ShowActivity, BaseButton, BaseAlert, BaseLoading },
   data() {
     return {
       activity: null,
@@ -99,10 +104,14 @@ export default {
       participants: 1,
       price: 0,
       error: false,
+      loading: false,
     };
   },
   methods: {
     findActivity() {
+      this.activity = null;
+      this.loading = true;
+      this.error = false;
       let randomType;
 
       if (this.type.length > 0) {
@@ -120,13 +129,16 @@ export default {
           }&min-price=0&max-price=${this.price}&type=${randomType}`
         )
         .then((response) => {
+          this.loading = false;
           if (response.data.error) this.error = true;
           else {
             this.activity = response.data;
             this.error = false;
           }
         })
-        .catch((error) => (this.error = error));
+        .catch((error) => {
+          this.error = error;
+        });
     },
   },
 };
@@ -234,5 +246,14 @@ select {
   &:hover {
     opacity: 1;
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

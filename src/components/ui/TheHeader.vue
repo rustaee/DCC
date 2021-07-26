@@ -15,10 +15,25 @@
         </li>
       </ul>
     </nav>
+    {{ favoriteActivities }}
   </header>
 </template>
 
-<script lang="ts"></script>
+<script lang="ts">
+import { defineComponent, computed } from "vue";
+import { useStore } from "vuex";
+
+export default defineComponent({
+  setup() {
+    const store = useStore();
+    const favoriteActivities = computed(() => store.state.activities);
+
+    return {
+      favoriteActivities,
+    };
+  },
+});
+</script>
 
 <style lang="scss" scoped>
 header {
@@ -30,7 +45,7 @@ header {
   padding: 20px;
 }
 
-.header__logo{
+.header__logo {
   @extend %flex-row;
 }
 
@@ -44,6 +59,10 @@ header {
 .header__logo--small {
   padding: 0 10px;
   font-size: 1.1rem;
-  color: shade($primary-color, 50)
+  color: shade($primary-color, 50);
+}
+
+.navigation {
+  margin-right: 10px;
 }
 </style>

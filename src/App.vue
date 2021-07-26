@@ -1,18 +1,29 @@
 <template>
   <div class="wrapper">
     <the-header />
-    <main><router-view /></main>
+    <main>
+      <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+          <component :is="Component"></component>
+        </transition>
+      </router-view>
+    </main>
     <the-footer />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onMounted } from "vue";
+import { useStore } from "vuex";
 import TheHeader from "@/components/ui/TheHeader.vue";
 import TheFooter from "@/components/ui/TheFooter.vue";
 
 export default defineComponent({
   components: { TheHeader, TheFooter },
+  setup() {
+    const store = useStore();
+    onMounted(() => store.dispatch("getFavoriteActivities"));
+  },
 });
 </script>
 
@@ -70,5 +81,19 @@ li {
 
 main {
   grid-area: main;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s;
+}
+.fade-enter-from {
+  opacity: 0;
+  transform: translatex(-1000px);
+}
+
+.fade-leave-to {
+  opacity: 0;
+  transform: translatex(1000px);
 }
 </style>
