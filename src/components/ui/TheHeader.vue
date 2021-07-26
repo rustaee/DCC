@@ -13,9 +13,19 @@
             Help me find an activity
           </router-link>
         </li>
+        <li>
+          <span class="seperator"> | </span>
+        </li>
+        <li class="favorite">
+          <router-link :to="{ name: 'Favorites' }">
+            <font-awesome-icon icon="heart" class="favorite__heart" />
+            <span class="favorite__counter">{{
+              favoriteActivities.length
+            }}</span>
+          </router-link>
+        </li>
       </ul>
     </nav>
-    {{ favoriteActivities }}
   </header>
 </template>
 
@@ -64,5 +74,25 @@ header {
 
 .navigation {
   margin-right: 10px;
+
+  li {
+    display: inline-block;
+    position: relative;
+    margin: 0 5px;
+  }
+}
+
+.favorite__counter {
+  position: relative;
+  left: 8px;
+  top: 1px;
+}
+
+.favorite__heart {
+  color: red;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  font-size: 1.5rem;
 }
 </style>

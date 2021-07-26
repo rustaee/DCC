@@ -13,6 +13,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () =>
       import("../views/SearchActivity.vue"),
   },
+  {
+    path: "/favorites",
+    name: "Favorites",
+    component: () =>
+      import("../views/FavoriteActivities.vue"),
+  },
 ];
 
 const router = createRouter({

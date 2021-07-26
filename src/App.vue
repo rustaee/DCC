@@ -3,7 +3,7 @@
     <the-header />
     <main>
       <router-view v-slot="{ Component }">
-        <transition name="fade" mode="out-in">
+        <transition name="slide" mode="out-in">
           <component :is="Component"></component>
         </transition>
       </router-view>
@@ -66,6 +66,7 @@ li {
   background-image: url("./assets/bg2.jpg");
   background-size: cover;
   background-blend-mode: multiply;
+  background-attachment: fixed;
 }
 
 .wrapper {
@@ -83,16 +84,16 @@ main {
   grid-area: main;
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.5s;
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.5s ease-out;
 }
-.fade-enter-from {
+.slide-enter-from {
   opacity: 0;
   transform: translatex(-1000px);
 }
 
-.fade-leave-to {
+.slide-leave-to {
   opacity: 0;
   transform: translatex(1000px);
 }

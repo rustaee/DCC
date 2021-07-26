@@ -2,7 +2,7 @@
   <section class="activity">
     <base-card>
       <div class="activity__title activity__field">{{ activity.activity }}</div>
-
+      {{ activity.key }}
       <div class="activity__type activity__field">
         <div class="activity__type__label">Category : &nbsp;</div>
         <div class="activity__type__value">{{ activity.type }}</div>
@@ -65,7 +65,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, toRefs } from "vue";
+import { defineComponent, ref, toRefs, onMounted } from "vue";
 import { useStore } from "vuex";
 import BaseCard from "@/components/ui/BaseCard.vue";
 
@@ -113,10 +113,19 @@ export default defineComponent({
       if (!liked.value) {
         store.dispatch("addToFavorite", activity.value);
       } else {
-        console.log("hech");
+        store.dispatch("removeFromFavorite", activity.value);
       }
       liked.value = !liked.value;
     };
+
+    onMounted(() => {
+      const activityKey = activity.value;
+      const activities = store.state.activities;
+      const foundActivity = activities.find(
+        (element: Record<string, unknown>) => element.key == activityKey.key
+      );
+      if (foundActivity) liked.value = true;
+    });
 
     return {
       calculateAccessibilityPercentage,
