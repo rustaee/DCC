@@ -35,7 +35,7 @@ export default defineComponent({
       loading.value = true;
       error.value = false;
       axios
-        .get("http://www.boredapi.com/api/activity/")
+        .get("https://www.boredapi.com/api/activity/")
         .then((response) => {
           loading.value = false;
           if (response.data.error) error.value = true;

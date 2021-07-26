@@ -120,7 +120,7 @@ export default defineComponent({
 
       axios
         .get(
-          `http://www.boredapi.com/api/activity?minaccessibility=${
+          `https://www.boredapi.com/api/activity?minaccessibility=${
             1 - accessibility.value
           }&maxaccessibility=1&participants=${
             participants.value
