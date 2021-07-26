@@ -109,7 +109,7 @@ export default defineComponent({
         newRange.min
       );
     };
-    
+
     /** To be shown in the range slider */
     const calculateAccessibilityPercentage = (value: number): number => {
       return Math.round(
@@ -196,6 +196,17 @@ export default defineComponent({
   @extend %flex-row;
 }
 
+.activity__rating__circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(15, 15, 15, 0.377);
+  margin-right: 2px;
+
+  &.active {
+    background: rgb(62, 224, 62);
+  }
+}
 
 .add-to-favorite {
   position: absolute;
