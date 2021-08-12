@@ -1,12 +1,11 @@
 <template>
   <header class="header">
     <div class="header__container">
-
       <!-- logo -->
       <div class="header__logo">
-        <router-link class="header__logo--big" :to="{ name: 'Home' }"
-          >DCC</router-link
-        >
+        <router-link class="header__logo--big" :to="{ name: 'Home' }">
+          DCC
+        </router-link>
         <span class="header__logo--small">Never get bored</span>
       </div>
 
@@ -28,7 +27,6 @@
           </li>
         </ul>
       </nav>
-
     </div>
   </header>
 </template>
