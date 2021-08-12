@@ -31,7 +31,7 @@
   </header>
 </template>
 
-<script lang="ts">
+<script lang="ts"> 
 import Activity from "@/types/activity"; /** Typescript interface */
 import { defineComponent, computed } from "vue";
 import { useStore } from "vuex";
