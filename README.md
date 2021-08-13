@@ -1,4 +1,4 @@
-# dutch-coding-company
+# DCC
 
 ## Project setup
 ```
