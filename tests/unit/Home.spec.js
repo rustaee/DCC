@@ -29,6 +29,7 @@ describe("Home", () => {
 
   it("makes an api call", async () => {
     await wrapper.find("button").trigger("click");
+    
     expect(mockGet).toHaveBeenCalled();
   });
 });
